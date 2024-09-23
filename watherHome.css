@@ -5,7 +5,7 @@
   box-sizing: border-box;
 }
 body {
-  background-color: #222;
+  background: linear-gradient(to right, #e2e2e2, #c9d6ff);
 }
 .card {
   width: 100%;

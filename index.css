@@ -45,13 +45,15 @@ body {
   text-decoration: none;
   margin: 15px 0 10px;
 }
-
+.errorMessage {
+  color: red;
+}
 .container button {
-  background-color: #512da8;
+  background: linear-gradient(135deg, #00feba, #5b548a);
   color: #fff;
   font-size: 12px;
   padding: 10px 45px;
-  border: 1px solid transparent;
+  border: 1px solid;
   border-radius: 8px;
   font-weight: 600;
   letter-spacing: 0.5px;
@@ -163,8 +165,10 @@ body {
 }
 
 .toggle {
+  background-color: #512da8;
   height: 100%;
   background: linear-gradient(135deg, #00feba, #5b548a);
+  /* background: linear-gradient(to right, #5c6bc0, #512da8); */
   color: #fff;
   position: relative;
   left: -100%;
