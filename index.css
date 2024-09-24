@@ -45,11 +45,9 @@ body {
   text-decoration: none;
   margin: 15px 0 10px;
 }
-
 .errorMessage {
   color: red;
 }
-
 .container button {
   background: linear-gradient(135deg, #00feba, #5b548a);
   color: #fff;
@@ -132,6 +130,21 @@ body {
     opacity: 1;
     z-index: 5;
   }
+}
+
+.social-icons {
+  margin: 20px 0;
+}
+
+.social-icons a {
+  border: 1px solid #ccc;
+  border-radius: 20%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 3px;
+  width: 40px;
+  height: 40px;
 }
 
 .toggle-container {
