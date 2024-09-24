@@ -17,13 +17,13 @@ body {
   padding: 40px 35px;
   text-align: center;
 }
-.serach {
+.search {
   width: 100%;
 
   align-items: center;
   justify-content: space-between;
 }
-.serach input {
+.search input {
   border: 0;
   outline: 0;
   background: #ebfffc;
@@ -35,7 +35,7 @@ body {
   margin-right: 16px;
   font-size: 18px;
 }
-.serach button {
+.search button {
   border: 0;
   outline: 0;
   background: #ebfffc;
@@ -45,7 +45,7 @@ body {
   height: 60px;
   cursor: pointer;
 }
-.serach button img {
+.search button img {
   width: 15px;
 }
 .weather-icon {
