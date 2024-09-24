@@ -15,14 +15,13 @@ loginBtnElement.addEventListener("click", () => {
 formLoginBtnElement.addEventListener("click", (event) => {
   event.preventDefault();
 
-  const emailElement = document.getElementById("loginEmail").value;
-  const passwordElement = document.getElementById("loginPassword").value;
+  const emailElementValue = document.getElementById("loginEmail").value;
+  const passwordElementValue = document.getElementById("loginPassword").value;
 
   fetch("http://localhost:3000/clients")
     .then((result) => {
       if (!result.ok) {
         alert("Something went wrong");
-        console.log(result);
         return;
       }
       return result.json();
@@ -30,52 +29,58 @@ formLoginBtnElement.addEventListener("click", (event) => {
     .then((data) => {
       for (let i in data) {
         if (
-          data[i].email === emailElement &&
-          data[i].password === passwordElement
+          data[i].email === emailElementValue &&
+          data[i].password === passwordElementValue
         ) {
-          console.log("Ok");
           window.location.replace("weatherHome.html");
         }
       }
     });
 });
 
-formRegistrationBtnElement.addEventListener("click", (event) => {
+formRegistrationBtnElement.addEventListener("click", async (event) => {
   event.preventDefault();
 
-  const nameElement = document.getElementById("name").value;
-  const emailElement = document.getElementById("email").value;
-  const passwordElement = document.getElementById("password").value;
-  console.log(nameElement, emailElement, passwordElement);
+  const nameElementValue = document.getElementById("name").value;
+  const emailElementValue = document.getElementById("email").value;
+  const passwordElementValue = document.getElementById("password").value;
 
-  if (isValidEmail(emailElement) && isValidPassword(passwordElement)) {
-    console.log("clicked");
+  if (await checkRecordExit(emailElementValue)) {
+    if (
+      isValidEmail(emailElementValue) &&
+      isValidPassword(passwordElementValue)
+    ) {
+      const newUser = {
+        username: nameElementValue,
+        email: emailElementValue,
+        password: passwordElementValue,
+      };
 
-    const newUser = {
-      username: nameElement,
-      email: emailElement,
-      password: passwordElement,
-    };
-
-    fetch("http://localhost:3000/clients", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newUser),
-    })
-      .then((response) => {
-        if (response.ok) {
-          alert("Registration done successfully");
-        } else {
-          alert("Registration not successful ");
-        }
+      fetch("http://localhost:3000/clients", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUser),
       })
-      .catch((error) => {
-        alert(error);
-      });
+        .then((response) => {
+          if (response.ok) {
+            alert("Registration done successfully.Please login");
+          } else {
+            alert("Registration not successful ");
+          }
+        })
+        .catch((error) => {
+          alert("Something went wrong");
+        });
+    }
+    window.location.replace("index.html");
+  } else {
+    window.location.replace("#");
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
   }
-  window.location.replace("index.html");
 });
 
 function isValidEmail(emailElement) {
@@ -84,17 +89,17 @@ function isValidEmail(emailElement) {
 
   if (emailPattern.test(emailElement)) {
     errorMessageElement.textContent = "";
-    console.log("clicked");
     return true;
   } else {
     errorMessageElement.textContent = "Please enter a valid email address.";
-    console.log(" no clicked");
     return false;
   }
 }
+
 function isValidPassword(passwordElement) {
   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   const errorMessageElement = document.getElementById("passwordErrorMessage");
+
   if (
     passwordElement.length > 8 &&
     passwordElement.toUpperCase() &&
@@ -105,6 +110,31 @@ function isValidPassword(passwordElement) {
     return true;
   } else {
     errorMessageElement.textContent = "Please enter a valid password.";
+    return false;
+  }
+}
+
+async function checkRecordExit(email) {
+  try {
+    const result = await fetch("http://localhost:3000/clients");
+
+    if (!result.ok) {
+      alert("Something went wrong");
+      return false;
+    }
+
+    const data = await result.json();
+
+    for (let i in data) {
+      if (data[i].email === email) {
+        alert("Email already registered");
+        return false;
+      }
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Error fetching data:", error);
     return false;
   }
 }

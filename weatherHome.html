@@ -6,33 +6,34 @@
   </head>
   <body>
     <div class="card">
-      <div class="serach">
-        <input type="text" placeholder="Enter the city" spellcheck="false" />
-        <button>
-          <img src="/Weather_Website_Project/Images/searchIcon.png" />
+      <div class="search">
+        <input
+          type="text"
+          id="userInput"
+          placeholder="Enter the city"
+          spellcheck="true"
+        />
+        <button id="searchButton">
+          <img src="/Images/searchIcon.png" />
         </button>
       </div>
       <div class="weather">
         <img
-          src="/Weather_Website_Project/Images/rainIcon.png"
+          src="/Images"
+          id="tempIcon
+        "
           class="weather-icon"
         />
-        <h1 class="temp">22 °C</h1>
-        <h2 class="city">New York</h2>
+        <h1 id="temp">22 °C</h1>
+        <h2 class="cityName">New York</h2>
         <div class="details">
           <div class="col">
-            <img
-              src="/Weather_Website_Project/Images/rainIcon.png"
-              class="weather-icon"
-            />
+            <img src="/Images/w" class="weather-icon" />
             <div>
               <p class="humidity">50%</p>
               <p>Humidity</p>
             </div>
-            <img
-              src="/Weather_Website_Project/Images/windIcon.png"
-              class="weather-icon"
-            />
+            <img src="/Images/windIcon.png" class="weather-icon" />
             <div>
               <p class="wind">15km/h</p>
               <p>Wind Speed</p>
@@ -41,5 +42,6 @@
         </div>
       </div>
     </div>
+    <script src="weatherHome.js"></script>
   </body>
 </html>
