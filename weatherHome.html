@@ -5,42 +5,44 @@
     <link rel="stylesheet" href="watherHome.css" />
   </head>
   <body>
-    <div class="card">
-      <div class="search">
-        <input
-          type="text"
-          id="userInput"
-          placeholder="Enter the city"
-          spellcheck="true"
-        />
-        <button id="searchButton">
-          <img src="/Images/searchIcon.png" />
-        </button>
-      </div>
-      <div class="weather">
-        <img
-          src="/Images"
-          id="tempIcon
-        "
-          class="weather-icon"
-        />
-        <h1 id="temp">22 °C</h1>
-        <h2 class="cityName">New York</h2>
-        <div class="details">
-          <div class="col">
-            <img src="/Images/cold.png" class="weather-icon" />
-            <div>
-              <p class="humidity">50%</p>
-              <p>Humidity</p>
-            </div>
-            <img src="/Images/windIcon.png" class="weather-icon" />
-            <div>
-              <p class="wind">15km/h</p>
-              <p>Wind Speed</p>
+    <div class="flex-container">
+      <div class="card">
+        <div class="search">
+          <input
+            type="text"
+            id="userInput"
+            placeholder="Enter the city"
+            spellcheck="true"
+          />
+          <button id="searchButton">
+            <img src="/Images/searchIcon.png" />
+          </button>
+        </div>
+        <div class="weather">
+          <img src="/Images/cold.png" id="tempIcon" class="weather-icon" />
+          <h1 id="temp">22 °C</h1>
+          <h2 class="cityName">New York</h2>
+          <div class="details">
+            <div class="col">
+              <img src="/Images/humidityIcon.png" class="weather-icon" />
+              <div>
+                <p class="humidity">50%</p>
+                <p>Humidity</p>
+              </div>
+              <img src="/Images/windIcon.png" class="weather-icon" />
+              <div>
+                <p class="wind">15km/h</p>
+                <p>Wind Speed</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="card week">
+        <div class="weekDetails"></div>
+        <div id="weekCol" class="details"></div>
+      </div>
+      <div class="card wind"></div>
     </div>
     <script src="weatherHome.js"></script>
   </body>
