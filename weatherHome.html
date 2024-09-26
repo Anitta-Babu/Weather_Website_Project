@@ -4,7 +4,15 @@
     <title>Weather</title>
     <link rel="stylesheet" href="watherHome.css" />
   </head>
-  <body>
+  <body id="body">
+    <div class="headbar">
+      <div class="themeIcon">
+        <button id="themeBtn"><img src="/Images/theameIcon.png" /></button>
+      </div>
+      <div class="logoutIcon">
+        <button id="logoutBtn"><img src="/Images/logout.png" /></button>
+      </div>
+    </div>
     <div class="flex-container">
       <div class="card">
         <div class="search">
@@ -40,10 +48,52 @@
       </div>
       <div class="card week">
         <div class="weekDetails"></div>
-        <div id="weekCol" class="details"></div>
+        <div id="weekCol" class="details week"></div>
       </div>
-      <div class="card wind"></div>
+      <div class="card presure">
+        <h2>Atmospheric Pressure</h2><br>
+        <div class="presureDetails">
+          <div><img id="presureIcon" src="/Images/presure.webp" /></div>
+          <div>
+            <h2>G-Level</h2>
+            <h2 id="gLevel">1018 hPa</h2>
+          </div>
+          <div>
+          <h2>Sea-Level</h2>
+          <h2 id="seaLevel">1018 hPa</h2>
+        </div>
+        </div>
+        
+      </div>
+      <div class="card wind">
+        <div id="windCol">
+          <h2>Wind Direction</h2>
+          <br />
+          <h2 id="windDegree">15°</h2>
+          <div class="details windDirec">
+            <h2 id="windName">North Wind</h2>
+            <img id="windIcon" src="/Images/windIcon.png" />
+          </div>
+        </div>
+      </div>
+      <div class="card sun">
+        <div class="sunDetails">
+          <div class="sunRiseCol">
+            <h2>Sun Rise</h2>
+            <br />
+            <img id="sun" src="/Images/sunRise.png" />
+            <h3 id="sunRiseTime">12:30am</h3>
+          </div>
+          <div class="sunSetCol">
+            <h2>Sun Set</h2>
+            <br />
+            <img id="sun" src="/Images/sunSet.png" />
+            <h3 id="sunSetTime">12:30am</h3>
+          </div>
+        </div>
+      </div>
     </div>
+
     <script src="weatherHome.js"></script>
   </body>
 </html>

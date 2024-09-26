@@ -15,6 +15,9 @@ async function displayWeather() {
   document.getElementById("tempIcon").src = imageUrl;
   document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
   document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+  windDisplayFunction(data);
+  sunDisplay(data);
+  presureDisplay(data);
 }
 
 async function iconGeneration(iconId) {
@@ -29,7 +32,6 @@ async function displayWeekWeather() {
   const cityName = document.getElementById("userInput").value;
   const response = await fetch(apiUrl + `&q=${cityName}&appid=${apikey}`);
   const data = await response.json();
-  console.log(data);
   const week = new Array(
     data.list[0],
     data.list[5],
@@ -38,7 +40,7 @@ async function displayWeekWeather() {
     data.list[30],
     data.list[36]
   );
-  console.log(week);
+  // console.log(week);
   document.getElementById("weekCol").innerHTML = "";
   for (let i in week) {
     const pElement = document.createElement("p");
@@ -61,6 +63,86 @@ function getDate(date) {
   const formattedDateString = dateString.replace(" ", "T");
   const date1 = new Date(formattedDateString);
   return date1.toLocaleDateString();
+}
+
+function windDisplayFunction(data) {
+  const windColElement = document.getElementById("windCol");
+  const windDegree = data.wind.deg;
+  document.getElementById("windDegree").innerHTML = windDegree + "°";
+  let wind = "";
+  if (windDegree >= 0 && windDegree < 22.5) {
+    wind = "North wind";
+  } else if (windDegree >= 22.5 && windDegree < 45) {
+    wind = "North wind";
+  } else if (windDegree >= 45 && windDegree < 67.5) {
+    wind = "Northeast wind";
+  } else if (windDegree >= 67.5 && windDegree < 90) {
+    wind = " East-northeast wind";
+  } else if (windDegree >= 90 && windDegree < 112.5) {
+    wind = "East wind";
+  } else if (windDegree >= 112.5 && windDegree < 135) {
+    wind = "East-southeast wind";
+  } else if (windDegree >= 135 && windDegree < 157.5) {
+    wind = "Southeast wind";
+  } else if (windDegree >= 157.5 && windDegree < 180) {
+    wind = "South-southeast wind";
+  } else if (windDegree >= 180 && windDegree < 225) {
+    wind = "South wind";
+  } else if (windDegree >= 225 && windDegree < 270) {
+    wind = "Southwest wind";
+  } else if (windDegree >= 270 && windDegree < 315) {
+    wind = "West wind";
+  } else if (windDegree >= 315 && windDegree < 360) {
+    wind = "Southeast wind";
+  } else {
+    wind = "North Wind";
+  }
+  document.getElementById("windName").innerHTML = wind;
+}
+
+const themeButtonElement = document.getElementById("themeBtn");
+themeButtonElement.addEventListener("click", () => {
+  const bodyElement = document.querySelector("body");
+  const bodyCssElement = window.getComputedStyle(bodyElement).background;
+  if (
+    bodyCssElement ===
+    "rgba(0, 0, 0, 0) linear-gradient(to right, rgb(226, 226, 226), rgb(163, 176, 221)) repeat scroll 0% 0% / auto padding-box border-box"
+  ) {
+    bodyElement.style.background =
+      "linear-gradient(to right, #393232, #3b3b3e)";
+  } else {
+    bodyElement.style.background =
+      "linear-gradient(to right, #e2e2e2, #a3b0dd)";
+  }
+  console.log(bodyCssElement);
+});
+
+const loginButtonElement = document.getElementById("logoutBtn");
+loginButtonElement.addEventListener("click", () => {
+  window.location.replace("index.html");
+});
+
+function sunDisplay(data) {
+  const sunRiseTimeUnix = data.sys.sunrise;
+  const riseDate = new Date(sunRiseTimeUnix * 1000);
+  const riseHours = ("0" + riseDate.getHours()).slice(-2);
+  const riseMinutes = ("0" + riseDate.getMinutes()).slice(-2);
+  const riseSeconds = ("0" + riseDate.getSeconds()).slice(-2);
+  const sunRiseTime = ` ${riseHours}:${riseMinutes}:${riseSeconds}`;
+  document.getElementById("sunRiseTime").innerHTML = sunRiseTime + " AM";
+
+  const sunSetTimeUnix = data.sys.sunset;
+  const setDate = new Date(sunSetTimeUnix * 1000);
+  const setHours = ("0" + setDate.getHours()).slice(-2);
+  const setMinutes = ("0" + setDate.getMinutes()).slice(-2);
+  const setSeconds = ("0" + setDate.getSeconds()).slice(-2);
+  const sunSetTime = ` ${setHours}:${setMinutes}:${setSeconds}`;
+  document.getElementById("sunSetTime").innerHTML = sunSetTime + " PM";
+}
+
+function presureDisplay(data) {
+  document.getElementById("gLevel").innerHTML = data.main.sea_level + " hPa";
+  document.getElementById("seaLevel").innerHTML = data.main.grnd_level + " hPa";
 }
 
 const searchButtonElement = document.getElementById("searchButton");

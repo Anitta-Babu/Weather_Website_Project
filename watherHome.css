@@ -6,19 +6,50 @@
 }
 
 body {
-  background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+  background: linear-gradient(to right, #e2e2e2, #a3b0dd);
+}
+
+.headbar {
+  background: linear-gradient(135deg, #00feba, #5b548a);
+  height: 50px;
+  margin: 15px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  padding-right: 10px;
+  align-items: center;
+}
+
+.headbar button {
+  border: 0;
+  outline: 0;
+  background: none;
+  cursor: pointer;
+}
+.logoutIcon img {
+  margin-top: 7px;
+  width: 45px;
+}
+
+.themeIcon img {
+  margin-top: 7px;
+  width: 35px;
 }
 
 .flex-container {
-  display: flex;
-  /* justify-content: space-around;*/
-  align-items: flex-start;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-rows: 200px 200px 200px;
+  grid-template-columns: 200px 200px 200px 200px;
+  height: 100%;
+  grid-gap: 20px;
+  padding: 20px;
 }
-
 .card {
-  width: 100%;
-  max-width: 470px;
+  grid-row-start: 1;
+  grid-row-end: 4;
+  grid-column-start: 1;
+  grid-column-end: 3;
   background: linear-gradient(135deg, #00feba, #5b548a);
   color: #fff;
   margin: 10px;
@@ -28,13 +59,55 @@ body {
 }
 
 .card.week {
-  max-width: 670px;
-  height: 230px;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 3;
+  grid-column-end: 6;
 }
 
 .card.wind {
-  max-width: 270px;
-  height: 230px;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 6;
+  grid-column-end: 6;
+}
+#windIcon {
+  width: 100px;
+  height: 100px;
+}
+.card.presure {
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 5;
+  grid-column-end: 7;
+}
+#presureIcon {
+  width: 100px;
+  height: 75px;
+}
+
+.presureDetails {
+  padding: 0 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card.sun {
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 3;
+  grid-column-end: 5;
+}
+
+#sun {
+  width: 100px;
+  margin-top: -20px;
+}
+
+.sunDetails {
+  padding: 0 50px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .search {
@@ -72,8 +145,7 @@ body {
 }
 
 .weather-icon {
-  width: 200px;
-  margin-top: 10px;
+  width: 250px;
 }
 
 .weather h1 {
@@ -91,8 +163,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 25px;
-  margin-top: 20px;
+  padding: 0 10px;
+  margin-top: 30px;
+}
+.details.week {
+  margin-top: 10px;
+}
+
+.details.windDirec {
+  margin-top: -15px;
 }
 
 .col {
@@ -102,8 +181,8 @@ body {
 }
 
 .col img {
-  width: 60px;
-  margin-right: 20px;
+  width: 70px;
+  margin-right: 9px;
   margin-left: 20px;
-  margin-top: 10px;
+  margin-top: 5px;
 }
