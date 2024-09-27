@@ -78,6 +78,7 @@ function windDisplayFunction(data) {
   const windDegree = data.wind.deg;
   document.getElementById("windDegree").innerHTML = windDegree + "°";
   let wind = "";
+
   if (windDegree >= 0 && windDegree < 22.5) {
     wind = "North wind";
   } else if (windDegree >= 22.5 && windDegree < 45) {
@@ -116,7 +117,6 @@ function sunDisplay(data) {
   const riseSeconds = ("0" + riseDate.getSeconds()).slice(-2);
   const sunRiseTime = ` ${riseHours}:${riseMinutes}:${riseSeconds}`;
   document.getElementById("sunRiseTime").innerHTML = sunRiseTime + " AM";
-
   const sunSetTimeUnixValue = data.sys.sunset;
   const setDate = new Date(sunSetTimeUnixValue * 1000);
   const setHours = ("0" + setDate.getHours()).slice(-2);
@@ -168,6 +168,7 @@ const themeButtonElement = document.getElementById("themeBtn");
 themeButtonElement.addEventListener("click", () => {
   const bodyElement = document.querySelector("body");
   const bodyCssElement = window.getComputedStyle(bodyElement).background;
+
   if (
     bodyCssElement ===
     "rgba(0, 0, 0, 0) linear-gradient(to right, rgb(226, 226, 226), rgb(163, 176, 221)) repeat scroll 0% 0% / auto padding-box border-box"

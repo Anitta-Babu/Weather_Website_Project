@@ -26,6 +26,7 @@ body {
   background: none;
   cursor: pointer;
 }
+
 .logoutIcon img {
   margin-top: 7px;
   width: 45px;
@@ -44,6 +45,7 @@ body {
   grid-gap: 20px;
   padding: 20px;
 }
+
 .card {
   grid-row-start: 1;
   grid-row-end: 4;
@@ -75,16 +77,19 @@ body {
   grid-column-start: 6;
   grid-column-end: 6;
 }
+
 #windIcon {
   width: 100px;
   height: 100px;
 }
+
 .card.presure {
   grid-row-start: 2;
   grid-row-end: 3;
   grid-column-start: 5;
   grid-column-end: 7;
 }
+
 #presureIcon {
   width: 100px;
   height: 75px;
@@ -150,6 +155,7 @@ body {
   margin-left: -15px;
   margin-top: -30px;
 }
+
 .tempDetails {
   padding: 0 50px;
   display: flex;

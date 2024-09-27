@@ -1,4 +1,6 @@
-#toaster {
+#toaster,
+#registerToaster,
+#loginToaster {
   visibility: hidden;
   min-width: 250px;
   margin-left: -125px;
@@ -11,10 +13,13 @@
   z-index: 1;
   left: 50%;
   top: 30px;
-  font-size: 20px;
+  font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
 }
 
-#toaster.show {
+#toaster.show,
+#registerToaster.show,
+#loginToaster.show {
   visibility: visible;
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
