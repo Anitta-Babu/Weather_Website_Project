@@ -102,11 +102,11 @@ formRegistrationBtnElement.addEventListener("click", async (event) => {
   }
 });
 
-function isValidEmail(emailElement) {
+function isValidEmail(email) {
   const errorMessageElement = document.getElementById("emailErrorMessage");
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  if (emailPattern.test(emailElement)) {
+  if (emailPattern.test(email)) {
     errorMessageElement.textContent = "";
     return true;
   } else {
@@ -115,7 +115,7 @@ function isValidEmail(emailElement) {
   }
 }
 
-function isValidPassword(passwordElement) {
+function isValidPassword(password) {
   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   const errorMessageElement = document.getElementById("passwordErrorMessage");
 
@@ -123,7 +123,7 @@ function isValidPassword(passwordElement) {
     passwordElement.length > 8 &&
     passwordElement.toUpperCase() &&
     passwordElement.toLowerCase() &&
-    specialChars.test(passwordElement)
+    specialChars.test(password)
   ) {
     errorMessageElement.textContent = "";
     return true;
