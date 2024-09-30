@@ -1,0 +1,22 @@
+{
+  "clients": [
+    {
+      "id": "1",
+      "username": "Samantha",
+      "email": "Nathan@yesenia.net",
+      "password": "samatha@123"
+    },
+    {
+      "id": "7139",
+      "username": "Anitta",
+      "email": "anitta@gmail.com",
+      "password": "Anitta@2003"
+    },
+    {
+      "id": "b260",
+      "username": "Babu",
+      "email": "babu@gmail.com",
+      "password": "Babu@1969"
+    }
+  ]
+}
