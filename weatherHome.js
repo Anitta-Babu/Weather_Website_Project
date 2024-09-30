@@ -20,6 +20,7 @@ const searchButtonElement = document.getElementById("searchButton");
 searchButtonElement.addEventListener("click", () => {
   displayWeather();
 });
+
 function findIcon(temp, wind) {
   let img = "";
   if (temp <= 15) {

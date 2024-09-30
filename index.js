@@ -15,8 +15,8 @@ loginBtnElement.addEventListener("click", () => {
 formLoginBtnElement.addEventListener("click", (event) => {
   event.preventDefault();
 
-  const emailElementValue = document.getElementById("loginEmail").value;
-  const passwordElementValue = document.getElementById("loginPassword").value;
+  const email = document.getElementById("loginEmail").value;
+  const password = document.getElementById("loginPassword").value;
 
   fetch("http://localhost:3000/clients")
     .then((result) => {
@@ -28,10 +28,7 @@ formLoginBtnElement.addEventListener("click", (event) => {
     })
     .then((data) => {
       for (let i in data) {
-        if (
-          data[i].email === emailElementValue &&
-          data[i].password === passwordElementValue
-        ) {
+        if (data[i].email === email && data[i].password === password) {
           window.location.replace("weatherHome.html");
         }
       }
@@ -41,19 +38,16 @@ formLoginBtnElement.addEventListener("click", (event) => {
 formRegistrationBtnElement.addEventListener("click", async (event) => {
   event.preventDefault();
 
-  const nameElementValue = document.getElementById("name").value;
-  const emailElementValue = document.getElementById("email").value;
-  const passwordElementValue = document.getElementById("password").value;
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
   if (await checkRecordExit(emailElementValue)) {
-    if (
-      isValidEmail(emailElementValue) &&
-      isValidPassword(passwordElementValue)
-    ) {
+    if (isValidEmail(email) && isValidPassword(password)) {
       const newUser = {
-        username: nameElementValue,
-        email: emailElementValue,
-        password: passwordElementValue,
+        username: name,
+        email: email,
+        password: password,
       };
 
       fetch("http://localhost:3000/clients", {
@@ -83,11 +77,11 @@ formRegistrationBtnElement.addEventListener("click", async (event) => {
   }
 });
 
-function isValidEmail(emailElement) {
+function isValidEmail(email) {
   const errorMessageElement = document.getElementById("emailErrorMessage");
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  if (emailPattern.test(emailElement)) {
+  if (emailPattern.test(email)) {
     errorMessageElement.textContent = "";
     return true;
   } else {
@@ -96,7 +90,7 @@ function isValidEmail(emailElement) {
   }
 }
 
-function isValidPassword(passwordElement) {
+function isValidPassword(password) {
   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   const errorMessageElement = document.getElementById("passwordErrorMessage");
 
@@ -104,7 +98,7 @@ function isValidPassword(passwordElement) {
     passwordElement.length > 8 &&
     passwordElement.toUpperCase() &&
     passwordElement.toLowerCase() &&
-    specialChars.test(passwordElement)
+    specialChars.test(password)
   ) {
     errorMessageElement.textContent = "";
     return true;
