@@ -1,11 +1,8 @@
+import { apikey, dayApiUrl, weekApiUrl } from "./backendConnect.js";
 async function displayWeather() {
-  const apikey = "8bbf28e0cbcb834f5a430d84e87a32e4";
-  const apiUrl =
-    "https://api.openweathermap.org/data/2.5/weather?&units=metric";
+  const userInput = document.getElementById("userInput").value;
 
-  userInputElementValue = document.getElementById("userInput").value;
-
-  fetch(apiUrl + `&q=${userInputElementValue}&appid=${apikey}`)
+  fetch(dayApiUrl + `&q=${userInput}&appid=${apikey}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -13,17 +10,17 @@ async function displayWeather() {
       return response.json();
     })
     .then((data) => {
-      cardData(data);
-      displayWeekWeather();
-      windDisplayFunction(data);
-      sunDisplay(data);
-      presureDisplay(data);
-      getCloudData(data.clouds.all);
-      getVisibilityData(data.visibility);
-      tempData(data);
+      updateWeatherCard(data);
+      updateWeekWeather();
+      updateWindDetails(data);
+      updateSunriseSunsetDetails(data);
+      updateAtmPresureDetails(data);
+      updateCloudinessDetails(data.clouds.all);
+      getRoadVisibilityDetails(data.visibility);
+      getTemperatureDetails(data);
     })
     .catch(() => {
-      var toasterElement = document.getElementById("toaster");
+      let toasterElement = document.getElementById("toaster");
       toasterElement.className = "show";
       setTimeout(function () {
         toasterElement.className = toasterElement.className.replace("show", "");
@@ -31,7 +28,7 @@ async function displayWeather() {
     });
 }
 
-function cardData(data) {
+function updateWeatherCard(data) {
   document.querySelector(".cityName").innerHTML = data.name;
   document.getElementById("temp").innerHTML = Math.round(data.main.temp) + "°C";
   document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
@@ -41,12 +38,9 @@ function cardData(data) {
   });
 }
 
-async function displayWeekWeather() {
-  const apikey = "8bbf28e0cbcb834f5a430d84e87a32e4";
-  const apiUrl =
-    "https://api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&units=metric";
+async function updateWeekWeather() {
   const cityName = document.getElementById("userInput").value;
-  const response = await fetch(apiUrl + `&q=${cityName}&appid=${apikey}`);
+  const response = await fetch(weekApiUrl + `&q=${cityName}&appid=${apikey}`);
   const data = await response.json();
   const week = [
     data.list[0],
@@ -58,8 +52,8 @@ async function displayWeekWeather() {
   ];
   document.getElementById("weekCol").innerHTML = "";
   for (let i in week) {
-    const pElement = document.createElement("p");
-    pElement.textContent = Math.round(week[i].main.temp) + "°C";
+    const paragraphElement = document.createElement("p");
+    paragraphElement.textContent = Math.round(week[i].main.temp) + "°C";
     const imgElement = document.createElement("img");
     const imageUrl = await iconGeneration(week[i].weather[0].icon);
     imgElement.src = imageUrl;
@@ -68,13 +62,12 @@ async function displayWeekWeather() {
     h4Element.textContent = getDate(week[i].dt_txt);
     divElement.appendChild(h4Element);
     divElement.appendChild(imgElement);
-    divElement.appendChild(pElement);
+    divElement.appendChild(paragraphElement);
     document.getElementById("weekCol").appendChild(divElement);
   }
 }
 
-function windDisplayFunction(data) {
-  const windColElement = document.getElementById("windCol");
+function updateWindDetails(data) {
   const windDegree = data.wind.deg;
   document.getElementById("windDegree").innerHTML = windDegree + "°";
   let wind = "";
@@ -109,43 +102,44 @@ function windDisplayFunction(data) {
   document.getElementById("windName").innerHTML = wind;
 }
 
-function sunDisplay(data) {
+function updateSunriseSunsetDetails(data) {
   const sunRiseTimeUnixValue = data.sys.sunrise;
-  const riseDate = new Date(sunRiseTimeUnixValue * 1000);
-  const riseHours = ("0" + riseDate.getHours()).slice(-2);
-  const riseMinutes = ("0" + riseDate.getMinutes()).slice(-2);
-  const riseSeconds = ("0" + riseDate.getSeconds()).slice(-2);
-  const sunRiseTime = ` ${riseHours}:${riseMinutes}:${riseSeconds}`;
+  const sunRiseTime = formatTime(sunRiseTimeUnixValue);
   document.getElementById("sunRiseTime").innerHTML = sunRiseTime + " AM";
   const sunSetTimeUnixValue = data.sys.sunset;
-  const setDate = new Date(sunSetTimeUnixValue * 1000);
-  const setHours = ("0" + setDate.getHours()).slice(-2);
-  const setMinutes = ("0" + setDate.getMinutes()).slice(-2);
-  const setSeconds = ("0" + setDate.getSeconds()).slice(-2);
-  const sunSetTime = ` ${setHours}:${setMinutes}:${setSeconds}`;
+  const sunSetTime = formatTime(sunSetTimeUnixValue);
   document.getElementById("sunSetTime").innerHTML = sunSetTime + " PM";
 }
 
-function presureDisplay(data) {
+function formatTime(unixValue) {
+  const setDate = new Date(unixValue * 1000);
+  const setHours = ("0" + setDate.getHours()).slice(-2);
+  const setMinutes = ("0" + setDate.getMinutes()).slice(-2);
+  const setSeconds = ("0" + setDate.getSeconds()).slice(-2);
+  const setTime = ` ${setHours}:${setMinutes}:${setSeconds}`;
+  return setTime;
+}
+
+function updateAtmPresureDetails(data) {
   document.getElementById("gLevel").innerHTML = data.main.sea_level + " hPa";
   document.getElementById("seaLevel").innerHTML = data.main.grnd_level + " hPa";
 }
 
-function getCloudData(cloudData) {
+function updateCloudinessDetails(cloudData) {
   document.getElementById("cloudDetails").innerHTML = "";
   const h3Element = document.createElement("h2");
   h3Element.textContent = cloudData + " %";
   document.getElementById("cloudDetails").appendChild(h3Element);
 }
 
-function getVisibilityData(visibilityData) {
+function getRoadVisibilityDetails(visibilityData) {
   document.getElementById("visibilityDetails").innerHTML = "";
   const h3Element = document.createElement("h2");
   h3Element.textContent = visibilityData / 1000 + " km";
   document.getElementById("visibilityDetails").appendChild(h3Element);
 }
 
-function tempData(data) {
+function getTemperatureDetails(data) {
   document.getElementById("tempMax").innerHTML =
     Math.round(data.main.temp_max) + "°C";
   document.getElementById("tempMin").innerHTML =
