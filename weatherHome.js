@@ -1,5 +1,17 @@
 import { apikey, dayApiUrl, weekApiUrl } from "./backendConnect.js";
-async function displayWeather() {
+
+function functionCalls(data) {
+  updateWeatherCard(data);
+  updateWeekWeather();
+  updateWindDetails(data);
+  updateSunriseSunsetDetails(data);
+  updateAtmPresureDetails(data);
+  updateCloudinessDetails(data.clouds.all);
+  getRoadVisibilityDetails(data.visibility);
+  getTemperatureDetails(data);
+}
+
+function displayWeather() {
   const userInput = document.getElementById("userInput").value;
 
   fetch(dayApiUrl + `&q=${userInput}&appid=${apikey}`)
@@ -10,17 +22,12 @@ async function displayWeather() {
       return response.json();
     })
     .then((data) => {
-      updateWeatherCard(data);
-      updateWeekWeather();
-      updateWindDetails(data);
-      updateSunriseSunsetDetails(data);
-      updateAtmPresureDetails(data);
-      updateCloudinessDetails(data.clouds.all);
-      getRoadVisibilityDetails(data.visibility);
-      getTemperatureDetails(data);
+      functionCalls(data);
     })
     .catch(() => {
-      let toasterElement = document.getElementById("toaster");
+      const toasterElement = document.getElementById("toaster");
+      const toasterMessage = document.getElementById("toasterMessage");
+      toasterMessage.textContent = "Place not found";
       toasterElement.className = "show";
       setTimeout(function () {
         toasterElement.className = toasterElement.className.replace("show", "");
@@ -184,3 +191,35 @@ const searchButtonElement = document.getElementById("searchButton");
 searchButtonElement.addEventListener("click", () => {
   displayWeather();
 });
+
+function currentLocationWeatherData() {
+  navigator.geolocation.getCurrentPosition(gotLocation, failedToGetLocation);
+}
+function gotLocation(position) {
+  const latitude = position.coords.latitude;
+  const longitude = position.coords.longitude;
+  fetch(dayApiUrl + `&lat=${latitude}&lon=${longitude}&appid=${apikey}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      functionCalls(data);
+    })
+    .catch(() => {
+      failedToGetLocation();
+    });
+}
+
+function failedToGetLocation() {
+  const toasterElement = document.getElementById("toaster");
+  const toasterMessage = document.getElementById("toasterMessage");
+  toasterMessage.textContent = "Something went wrong when taking location";
+  toasterElement.className = "show";
+  setTimeout(function () {
+    toasterElement.className = toasterElement.className.replace("show", "");
+  }, 3000);
+}
+currentLocationWeatherData();

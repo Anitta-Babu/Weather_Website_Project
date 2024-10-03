@@ -5,11 +5,11 @@ const formLoginBtnElement = document.getElementById("loginBtn");
 const formRegistrationBtnElement = document.getElementById("registerBtn");
 
 signUpBtnElement.addEventListener("click", () => {
-  container.classList.add("active");
+  containerElement.classList.add("active");
 });
 
 signInBtnElement.addEventListener("click", () => {
-  container.classList.remove("active");
+  containerElement.classList.remove("active");
 });
 
 formLoginBtnElement.addEventListener("click", (event) => {
@@ -87,6 +87,7 @@ formRegistrationBtnElement.addEventListener("click", async (event) => {
   if (name === "" || emailId === "" || password === "") {
     toasterMessage.innerHTML = "Please fill all felids";
     toasterElement.className = "show";
+
     setTimeout(function () {
       toasterElement.className = toasterElement.className.replace("show", "");
     }, 3000);
@@ -99,44 +100,26 @@ formRegistrationBtnElement.addEventListener("click", async (event) => {
           password: password,
         };
 
-        fetch("http://localhost:3000/clients", {
+        await fetch("http://localhost:3000/clients", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(newUser),
-        })
-          // .then((response) => {
-          //   if (response.ok) {
-          //     console.log("OK !!!");
-
-          //     toasterMessage.innerHTML =
-          //       "Registration done successfully.Please login";
-          //     toasterElement.className = "show";
-          //     toasterElement.className = toasterElement.className.replace(
-          //       "show",
-          //       ""
-          //     );
-          //     setTimeout(function () {
-          //       //window.location.replace("weatherHome.html");
-          //     }, 30000);
-          //     // return;
-          //   } else {
-          //     alert("Registration not successful ");
-          //   }
-          // })
-          .catch((error) => {
-            console.log(error);
-
-            alert("Something went wrong");
-          });
+        }).then((respose) => {
+          if (respose.ok) {
+            alert("Registration done successful.Please login");
+          } else {
+            alert("Registration not successful");
+          }
+        });
       }
     } else {
-      console.log("Clicked");
-      // window.location.replace("#");
-      // document.getElementById("name").value = "";
-      // document.getElementById("email").value = "";
-      // document.getElementById("password").value = "";
+      toasterMessage.innerHTML = "Email already registered";
+      toasterElement.className = "show";
+      setTimeout(function () {
+        toasterElement.className = toasterElement.className.replace("show", "");
+      }, 3000);
     }
   }
 });
@@ -144,7 +127,7 @@ formRegistrationBtnElement.addEventListener("click", async (event) => {
 function isValidEmail(emailId) {
   const errorMessageElement = document.getElementById("emailErrorMessage");
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
+  errorMessageElement.textContent = "";
   if (emailPattern.test(emailId)) {
     errorMessageElement.textContent = "";
     return true;
@@ -157,7 +140,7 @@ function isValidEmail(emailId) {
 function isValidPassword(password) {
   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   const errorMessageElement = document.getElementById("passwordErrorMessage");
-
+  errorMessageElement.textContent = "";
   if (
     password.length > 8 &&
     password.toUpperCase() &&
@@ -173,25 +156,21 @@ function isValidPassword(password) {
 }
 
 async function checkRecordExit(emailId) {
-  try {
-    const result = await fetch("http://localhost:3000/clients");
+  const result1 = await fetch("http://localhost:3000/clients");
 
-    if (!result.ok) {
-      alert("Something went wrong");
-      return false;
-    }
-
-    const data = await result.json();
-
-    for (let i in data) {
-      if (data[i].email === emailId) {
-        alert("Email already registered");
-        return false;
-      }
-    }
-    return true;
-  } catch (error) {
-    console.error("Error fetching data:", error);
+  if (!result1.ok) {
+    alert("Something went wrong");
     return false;
   }
+
+  const data = await result1.json();
+  let result = true;
+  for (let i in data) {
+    if (data[i].email === emailId) {
+      result = false;
+      break;
+    }
+  }
+
+  return result;
 }
