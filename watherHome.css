@@ -6,23 +6,165 @@
 }
 
 body {
-  background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+  background: linear-gradient(to right, #e2e2e2, #a3b0dd);
+}
+
+.headbar {
+  background: linear-gradient(135deg, #00feba, #5b548a);
+  height: 50px;
+  margin: 15px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+}
+
+.headbar button {
+  border: 0;
+  outline: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.logoutIcon img {
+  margin-top: 7px;
+  width: 45px;
+}
+
+.themeIcon img {
+  margin-top: 7px;
+  width: 35px;
+}
+
+.flex-container {
+  display: grid;
+  grid-template-rows: 200px 200px 200px;
+  grid-template-columns: 200px 200px 200px 200px;
+  height: 100%;
+  grid-gap: 20px;
+  padding: 20px;
 }
 
 .card {
-  width: 100%;
-  max-width: 470px;
+  grid-row-start: 1;
+  grid-row-end: 4;
+  grid-column-start: 1;
+  grid-column-end: 3;
   background: linear-gradient(135deg, #00feba, #5b548a);
   color: #fff;
-  margin: 100px auto 0;
+  margin: 10px;
   border-radius: 20px;
-  padding: 40px 35px;
+  padding: 20px 15px;
   text-align: center;
+}
+
+.card.week {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 3;
+  grid-column-end: 6;
+}
+
+.weekIcons {
+  width: 590px;
+  height: 110px;
+}
+
+.card.wind {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 6;
+  grid-column-end: 6;
+}
+
+#windIcon {
+  width: 100px;
+  height: 100px;
+}
+
+.card.presure {
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 5;
+  grid-column-end: 7;
+}
+
+#presureIcon {
+  width: 100px;
+  height: 75px;
+}
+
+.presureDetails {
+  padding: 0 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card.sun {
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 3;
+  grid-column-end: 5;
+}
+
+#sun {
+  width: 100px;
+  margin-top: -20px;
+}
+
+.sunDetails {
+  padding: 0 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card.cloud {
+  grid-row-start: 3;
+  grid-row-end: 3;
+  grid-column-start: 3;
+  grid-column-end: 4;
+}
+
+.cloud img {
+  width: 150px;
+}
+
+.card.visibility {
+  grid-row-start: 3;
+  grid-row-end: 3;
+  grid-column-start: 4;
+  grid-column-end: 4;
+}
+
+.visibility img {
+  width: 150px;
+  height: 100px;
+  margin-top: -10px;
+}
+
+.card.temperature {
+  grid-row-start: 3;
+  grid-row-end: 3;
+  grid-column-start: 5;
+  grid-column-end: 7;
+}
+
+.temperature img {
+  width: 120px;
+  margin-left: -15px;
+  margin-top: -30px;
+}
+
+.tempDetails {
+  padding: 0 50px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: -25px;
 }
 
 .search {
   width: 100%;
-
   align-items: center;
   justify-content: space-between;
 }
@@ -56,17 +198,16 @@ body {
 }
 
 .weather-icon {
-  width: 150px;
-  margin-top: 30px;
+  width: 250px;
 }
 
 .weather h1 {
-  font-size: 70px;
+  font-size: 60px;
   font-weight: 500;
 }
 
 .weather h2 {
-  font-size: 45px;
+  font-size: 40px;
   font-weight: 400;
   margin-top: -5px;
 }
@@ -75,8 +216,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 30px;
-  margin-top: 60px;
+  padding: 0 10px;
+  margin-top: 30px;
+}
+.details.week {
+  margin-top: 10px;
+}
+
+.details.windDirec {
+  margin-top: -15px;
 }
 
 .col {
@@ -86,8 +234,8 @@ body {
 }
 
 .col img {
-  width: 60px;
-  margin-right: 20px;
+  width: 70px;
+  margin-right: 9px;
   margin-left: 20px;
-  margin-top: 10px;
+  margin-top: 5px;
 }

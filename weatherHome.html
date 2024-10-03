@@ -3,40 +3,134 @@
   <head>
     <title>Weather</title>
     <link rel="stylesheet" href="watherHome.css" />
+    <link rel="stylesheet" href="toster.css" />
   </head>
-  <body>
-    <div class="card">
-      <div class="search">
-        <input
-          type="text"
-          id="userInput"
-          placeholder="Enter the city"
-          spellcheck="true"
-        />
-        <button id="searchButton">
-          <img src="/Images/searchIcon.png" />
-        </button>
+  <body id="body">
+    <div class="headbar">
+      <div class="themeIcon">
+        <button id="themeBtn"><img src="/Images/theameIcon.png" /></button>
       </div>
-      <div class="weather">
-        <img src="/Images/cold.png" id="tempIcon" class="weather-icon" />
-        <h1 id="temp">22 °C</h1>
-        <h2 class="cityName">New York</h2>
-        <div class="details">
-          <div class="col">
-            <img src="/Images/humidityIcon.png" class="weather-icon" />
-            <div>
-              <p class="humidity">50%</p>
-              <p>Humidity</p>
-            </div>
-            <img src="/Images/windIcon.png" class="weather-icon" />
-            <div>
-              <p class="wind">15km/h</p>
-              <p>Wind Speed</p>
+      <div class="logoutIcon">
+        <button id="logoutBtn"><img src="/Images/logout.png" /></button>
+      </div>
+    </div>
+    <div class="flex-container">
+      <div class="card">
+        <div class="search">
+          <input
+            id="userInput"
+            type="text"
+            placeholder="Enter the city"
+            spellcheck="true"
+          />
+          <button id="searchButton">
+            <img src="/Images/searchIcon.png" />
+          </button>
+        </div>
+        <div class="weather">
+          <img src="/Images/icon.png" id="tempIcon" class="weather-icon" />
+          <h1 id="temp">°C</h1>
+          <h2 class="cityName"></h2>
+          <div class="details">
+            <div class="col">
+              <img src="/Images/humidityIcon.png" class="weather-icon" />
+              <div>
+                <p class="humidity">%</p>
+                <p>Humidity</p>
+              </div>
+              <img src="/Images/windIcon.png" class="weather-icon" />
+              <div>
+                <p class="wind">km/h</p>
+                <p>Wind Speed</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="card week">
+        <div class="weekDetails"></div>
+        <div id="weekCol" class="details week">
+          <img src="/Images/week.png" id="weekIcons" />
+        </div>
+      </div>
+      <div class="card presure">
+        <h2>Atmospheric Pressure</h2>
+        <br />
+        <div class="presureDetails">
+          <div><img id="presureIcon" src="/Images/presure.webp" /></div>
+          <div>
+            <h2>G-Level</h2>
+            <h3 id="gLevel">hPa</h3>
+          </div>
+          <div>
+            <h2>Sea-Level</h2>
+            <h3 id="seaLevel">hPa</h3>
+          </div>
+        </div>
+      </div>
+      <div class="card wind">
+        <div id="windColumn">
+          <h2>Wind Direction</h2>
+          <br />
+          <h2 id="windDegree">0°</h2>
+          <div class="details windDirec">
+            <h2 id="windName">Wind Dierection</h2>
+            <img id="windIcon" src="/Images/windIcon.png" />
+          </div>
+        </div>
+      </div>
+      <div class="card sun">
+        <div class="sunDetails">
+          <div class="sunRiseCol">
+            <h2>Sun Rise</h2>
+            <br />
+            <img id="sun" src="/Images/sunRise.png" />
+            <h3 id="sunRiseTime">am</h3>
+          </div>
+          <div class="sunSetCol">
+            <h2>Sun Set</h2>
+            <br />
+            <img id="sun" src="/Images/sunSet.png" />
+            <h3 id="sunSetTime">pm</h3>
+          </div>
+        </div>
+      </div>
+      <div class="card cloud">
+        <div>
+          <h2>Cloudiness</h2>
+          <img src="/Images/cloud.png" />
+        </div>
+        <div id="cloudDetails"></div>
+      </div>
+      <div class="card visibility">
+        <div>
+          <h2>Visibility</h2>
+          <img src="/Images/visibility.png" />
+        </div>
+        <div id="visibilityDetails"></div>
+      </div>
+      <div class="card temperature">
+        <div>
+          <h2>Temperature</h2>
+          <br />
+        </div>
+        <div class="tempDetails">
+          <div><img src="/Images/tempIcon.png" /></div>
+          <div>
+            <h2>Temp-Min</h2>
+            <br />
+            <h3 id="tempMin">°C</h3>
+          </div>
+          <div>
+            <h2>Temp-Max</h2>
+            <br />
+            <h3 id="tempMax">°C</h3>
+          </div>
+        </div>
+      </div>
     </div>
-    <script src="weatherHome.js"></script>
+    <div id="toaster"><p id="toasterMessage"></p></div>
+
+    <script src="weatherHome.js" type="module"></script>
   </body>
 </html>

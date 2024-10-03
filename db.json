@@ -17,6 +17,36 @@
       "username": "Babu",
       "email": "babu@gmail.com",
       "password": "Babu@1969"
+    },
+    {
+      "id": "0473",
+      "username": "Lilly",
+      "email": "lilly@gmail.com",
+      "password": "Lilly@12345"
+    },
+    {
+      "id": "8928",
+      "username": "Annie",
+      "email": "annie@gmail.com",
+      "password": "Annuie@3456"
+    },
+    {
+      "id": "8fa6",
+      "username": "Arya",
+      "email": "arya@gmail.com",
+      "password": "Arya@2002"
+    },
+    {
+      "id": "a67e",
+      "username": "Ammu",
+      "email": "ammu@gmail.com",
+      "password": "ammuW@123"
+    },
+    {
+      "id": "1691",
+      "username": "Ann Jose",
+      "email": "annJose@gmail.com",
+      "password": "Annjose@123"
     }
   ]
 }

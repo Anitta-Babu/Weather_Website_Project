@@ -1,87 +1,134 @@
 const containerElement = document.getElementById("container");
-const registerBtnElement = document.getElementById("register");
-const loginBtnElement = document.getElementById("login");
+const signUpBtnElement = document.getElementById("signUpBtn");
+const signInBtnElement = document.getElementById("signInBtn");
 const formLoginBtnElement = document.getElementById("loginBtn");
 const formRegistrationBtnElement = document.getElementById("registerBtn");
 
-registerBtnElement.addEventListener("click", () => {
-  container.classList.add("active");
+signUpBtnElement.addEventListener("click", () => {
+  containerElement.classList.add("active");
 });
 
-loginBtnElement.addEventListener("click", () => {
-  container.classList.remove("active");
+signInBtnElement.addEventListener("click", () => {
+  containerElement.classList.remove("active");
 });
 
 formLoginBtnElement.addEventListener("click", (event) => {
   event.preventDefault();
 
-  const email = document.getElementById("loginEmail").value;
+  const emailId = document.getElementById("loginEmail").value;
   const password = document.getElementById("loginPassword").value;
+  const toasterElement = document.getElementById("toaster");
+  const toasterMessage = document.getElementById("toasterMessage");
 
-  fetch("http://localhost:3000/clients")
-    .then((result) => {
-      if (!result.ok) {
-        alert("Something went wrong");
-        return;
-      }
-      return result.json();
-    })
-    .then((data) => {
-      for (let i in data) {
-        if (data[i].email === email && data[i].password === password) {
-          window.location.replace("weatherHome.html");
+  if (emailId === "" || password === "") {
+    toasterMessage.innerHTML = "Please fill all fields";
+    toasterElement.className = "show";
+    setTimeout(function () {
+      toasterElement.className = toasterElement.className.replace("show", "");
+    }, 3000);
+  } else {
+    fetch("http://localhost:3000/clients")
+      .then((result) => {
+        if (!result.ok) {
+          toasterMessage.innerHTML = "Something went wrong";
+          toasterElement.className = "show";
+          setTimeout(function () {
+            toasterElement.className = toasterElement.className.replace(
+              "show",
+              ""
+            );
+          }, 3000);
+          return;
         }
-      }
-    });
+        return result.json();
+      })
+      .then((data) => {
+        let success = false;
+        for (let i in data) {
+          if (data[i].email === emailId && data[i].password === password) {
+            success = true;
+            toasterMessage.innerHTML = "Login Successful";
+            toasterElement.className = "show";
+            setTimeout(function () {
+              toasterElement.className = toasterElement.className.replace(
+                "show",
+                ""
+              );
+              window.location.replace("weatherHome.html");
+            }, 3000);
+            break;
+          }
+        }
+        if (!success) {
+          toasterMessage.innerHTML = "Login Unsuccessful";
+          toasterElement.className = "show";
+          setTimeout(function () {
+            toasterElement.className = toasterElement.className.replace(
+              "show",
+              ""
+            );
+          }, 3000);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 });
 
 formRegistrationBtnElement.addEventListener("click", async (event) => {
   event.preventDefault();
-
   const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
+  const emailId = document.getElementById("email").value;
   const password = document.getElementById("password").value;
+  const toasterElement = document.getElementById("toaster");
+  const toasterMessage = document.getElementById("toasterMessage");
 
-  if (await checkRecordExit(emailElementValue)) {
-    if (isValidEmail(email) && isValidPassword(password)) {
-      const newUser = {
-        username: name,
-        email: email,
-        password: password,
-      };
+  if (name === "" || emailId === "" || password === "") {
+    toasterMessage.innerHTML = "Please fill all felids";
+    toasterElement.className = "show";
 
-      fetch("http://localhost:3000/clients", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newUser),
-      })
-        .then((response) => {
-          if (response.ok) {
-            alert("Registration done successfully.Please login");
-          } else {
-            alert("Registration not successful ");
-          }
-        })
-        .catch((error) => {
-          alert("Something went wrong");
-        });
-    }
-    window.location.replace("index.html");
+    setTimeout(function () {
+      toasterElement.className = toasterElement.className.replace("show", "");
+    }, 3000);
   } else {
-    window.location.replace("#");
-    document.getElementById("name").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("password").value = "";
+    if (await checkRecordExit(emailId)) {
+      if (isValidEmail(emailId) && isValidPassword(password)) {
+        const newUser = {
+          username: name,
+          email: emailId,
+          password: password,
+        };
+
+        await fetch("http://localhost:3000/clients", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newUser),
+        }).then((respose) => {
+          if (respose.ok) {
+            alert("Registration done successful.Please login");
+          } else {
+            alert("Registration not successful");
+          }
+        });
+      }
+    } else {
+      toasterMessage.innerHTML = "Email already registered";
+      toasterElement.className = "show";
+      setTimeout(function () {
+        toasterElement.className = toasterElement.className.replace("show", "");
+      }, 3000);
+    }
   }
 });
 
-function isValidEmail(email) {
+function isValidEmail(emailId) {
   const errorMessageElement = document.getElementById("emailErrorMessage");
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-  if (emailPattern.test(email)) {
+  errorMessageElement.textContent = "";
+  if (emailPattern.test(emailId)) {
     errorMessageElement.textContent = "";
     return true;
   } else {
@@ -93,11 +140,11 @@ function isValidEmail(email) {
 function isValidPassword(password) {
   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   const errorMessageElement = document.getElementById("passwordErrorMessage");
-
+  errorMessageElement.textContent = "";
   if (
-    passwordElement.length > 8 &&
-    passwordElement.toUpperCase() &&
-    passwordElement.toLowerCase() &&
+    password.length > 8 &&
+    password.toUpperCase() &&
+    password.toLowerCase() &&
     specialChars.test(password)
   ) {
     errorMessageElement.textContent = "";
@@ -108,27 +155,22 @@ function isValidPassword(password) {
   }
 }
 
-async function checkRecordExit(email) {
-  try {
-    const result = await fetch("http://localhost:3000/clients");
+async function checkRecordExit(emailId) {
+  const result1 = await fetch("http://localhost:3000/clients");
 
-    if (!result.ok) {
-      alert("Something went wrong");
-      return false;
-    }
-
-    const data = await result.json();
-
-    for (let i in data) {
-      if (data[i].email === email) {
-        alert("Email already registered");
-        return false;
-      }
-    }
-
-    return true;
-  } catch (error) {
-    console.error("Error fetching data:", error);
+  if (!result1.ok) {
+    alert("Something went wrong");
     return false;
   }
+
+  const data = await result1.json();
+  let result = true;
+  for (let i in data) {
+    if (data[i].email === emailId) {
+      result = false;
+      break;
+    }
+  }
+
+  return result;
 }
